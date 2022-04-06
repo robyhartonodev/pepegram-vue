@@ -44,13 +44,31 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/firebase'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: '/'
+  },
+
+  firebase: {
+    config: {
+      apiKey: process.env.apiKey,
+      authDomain: process.env.authDomain,
+      projectId: process.env.projectId,
+      storageBucket: process.env.storageBucket,
+      messagingSenderId: process.env.messagingSenderId,
+      appId: process.env.appId,
+      measurementId: process.env.measurementId
+    },
+    services: {
+      auth: true, // Just as example. Can be any other service.
+      firestore: true,
+      storage: true
+    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
