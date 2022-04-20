@@ -15,6 +15,7 @@
         placeholder="Email"
         class="px-4 py-3 rounded-md border-gray-400"
         :disabled="isBusy"
+        @keyup.enter="$event.target.nextElementSibling.focus()"
       >
       <input
         v-model="password"
@@ -22,6 +23,7 @@
         placeholder="Password"
         class="px-4 py-3 rounded-md border-gray-400"
         :disabled="isBusy"
+        @keyup.enter="login"
       >
 
       <div class="text-gray-400">
@@ -30,6 +32,7 @@
 
       <button
         class="p-3 w-full bg-green-600 text-2xl text-white rounded-lg"
+        :disabled="isBusy"
         @click="login"
       >
         SIGN IN

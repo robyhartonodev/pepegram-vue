@@ -14,16 +14,21 @@
         type="email"
         placeholder="Email"
         class="px-4 py-3 rounded-md border-gray-400"
+        :disabled="isBusy"
+        @keyup.enter="$event.target.nextElementSibling.focus()"
       >
       <input
         v-model="password"
         type="password"
         placeholder="Password"
         class="px-4 py-3 rounded-md border-gray-400"
+        :disabled="isBusy"
+        @keyup.enter="register"
       >
 
       <button
         class="p-3 w-full bg-green-600 text-2xl text-white rounded-lg"
+        :disabled="isBusy"
         @click="register"
       >
         Register
