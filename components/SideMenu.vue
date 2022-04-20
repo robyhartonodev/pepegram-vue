@@ -1,6 +1,6 @@
 <template>
   <div class="p-4 py-8 sticky top-0">
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between text-base">
       <div class="flex items-center space-x-4">
         <div class="w-16 h-16 rounded-full flex items-center justify-center bg-amber-700 text-white">
           PP
@@ -15,7 +15,7 @@
         </div>
       </div>
       <div>
-        <button class="text-blue-400">
+        <button class="text-blue-400 text-sm">
           Switch
         </button>
       </div>
@@ -28,13 +28,13 @@
         See All
       </button>
     </div>
-    <div class="flex flex-col space-y-3 mt-4">
+    <div class="flex flex-col space-y-2 mt-4">
       <SuggestionItem
         v-for="index in 5"
         :key="'suggest-' + index"
       />
     </div>
-    <div class="mt-8 text-gray-400">
+    <div class="mt-8 text-gray-400 text-sm">
       <div class="flex">
         <a href="#">About</a>
         <div>-</div>

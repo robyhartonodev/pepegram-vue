@@ -13,7 +13,7 @@
     </div>
     <div
       id="story-item-list"
-      class="flex space-x-6 border-2 p-8 overflow-x-scroll"
+      class="flex space-x-6 border-2 p-8 overflow-x-hidden"
       @scroll="onHorizontalScroll"
     >
       <StoryItem v-for="index in 15" :key="'story-item-' + index" />

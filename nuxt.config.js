@@ -29,6 +29,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/animatecss.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -65,7 +66,17 @@ export default {
       measurementId: process.env.measurementId
     },
     services: {
-      auth: true, // Just as example. Can be any other service.
+      auth: {
+        persistence: 'local', // default
+        initialize: {
+          onAuthStateChangedMutation: undefined,
+          onAuthStateChangedAction: undefined,
+          subscribeManually: false
+        },
+        ssr: false, // default
+        emulatorPort: undefined,
+        emulatorHost: 'http://localhost'
+      },
       firestore: true,
       storage: true
     }

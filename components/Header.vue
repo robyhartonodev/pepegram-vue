@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between px-4 lg:px-64 py-4 items-center border-b-2 mb-4">
+  <div class="flex justify-between px-4 lg:px-48 py-4 items-center border-b-2 mb-4">
     <div class="instagram-font text-slate-900 text-3xl">
       Pepegram
     </div>

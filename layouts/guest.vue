@@ -1,9 +1,10 @@
 <template>
   <div class="flex">
-    <div class="sticky top-0 h-full w-full basis-1/3">
+    <div class="hidden md:flex md:sticky top-0 h-full w-full md:basis-1/3">
       <img src="~/assets/images/landing-image.jpg" class="object-fill h-screen w-full">
     </div>
-    <div class="basis-2/3">
+    <div class="basis-full md:basis-2/3">
+      <FlashMessage />
       <Nuxt />
     </div>
   </div>

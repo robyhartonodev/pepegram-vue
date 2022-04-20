@@ -1,10 +1,10 @@
 <template>
   <div class="flex items-center justify-between">
     <div class="flex items-center space-x-4">
-      <div class="w-12 h-12 rounded-full flex items-center justify-center bg-amber-700 text-white">
+      <div class="w-8 h-8 rounded-full flex items-center justify-center bg-amber-700 text-white">
         PP
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col text-sm">
         <div class="font-bold">
           username123
         </div>
@@ -14,7 +14,7 @@
       </div>
     </div>
     <div>
-      <button class="text-blue-400">
+      <button class="text-blue-400 text-sm">
         Follow
       </button>
     </div>

@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
   font-family: 'Oleo Script';
   font-style: normal;
@@ -13,4 +12,9 @@
 
 .instagram-font {
   font-family: 'Oleo Script'
+}
+
+:root {
+  --animate-duration: 1500ms;
+  --animate-delay: 0.9s;
 }

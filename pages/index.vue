@@ -1,5 +1,5 @@
 <template>
-  <div class="px-0 md:px-64 grid grid-cols-3 gap-3">
+  <div class="px-0 md:px-48 grid grid-cols-3 gap-3">
     <div class="col-span-3 lg:col-span-2">
       <StorySlider class="mb-4" />
       <div class="flex flex-col space-y-6">
@@ -16,6 +16,7 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  name: 'IndexPage'
+  name: 'IndexPage',
+  middleware: ['auth']
 })
 </script>

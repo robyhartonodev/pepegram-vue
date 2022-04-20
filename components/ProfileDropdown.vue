@@ -43,11 +43,17 @@
           </div>
         </div>
         <hr>
-        <form method="POST" action="#" role="none" class="p-1">
-          <button id="menu-item-4" type="submit" class="text-gray-700 block w-full text-left px-4 py-2 text-sm" role="menuitem" tabindex="-1">
+        <div>
+          <button
+            id="menu-item-4"
+            class="text-gray-700 block w-full text-left px-4 py-2 text-sm"
+            role="menuitem"
+            tabindex="-1"
+            @click="logout"
+          >
             Log Out
           </button>
-        </form>
+        </div>
       </div>
     </div>
   </div>
@@ -66,6 +72,15 @@ export default Vue.extend({
   methods: {
     toggleDropdown () {
       this.showDropdown = !this.showDropdown
+    },
+    logout () {
+      this.$fire.auth.signOut()
+        .then(() => {
+          this.$router.push('/login')
+          this.$store.dispatch('flashmessage/show', { text: 'Logout successful', duration: 5000, type: 'success' })
+        })
+        .catch(() => {
+        })
     }
   }
 })
