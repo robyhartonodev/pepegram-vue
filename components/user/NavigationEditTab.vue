@@ -34,6 +34,10 @@ export default Vue.extend({
       ]
     }
   },
+  mounted () {
+    const lastPart = window.location.href.split('/').pop()
+    this.setSelectedTab(lastPart)
+  },
   methods: {
     redirectToUserEditPath (item: IEditTabItem) {
       const currentUser = this.$fire.auth.currentUser
@@ -41,6 +45,14 @@ export default Vue.extend({
 
       if (currentUser) {
         this.$router.push(`/users/${currentUser.uid}/edit/${item.path}`)
+      }
+    },
+    setSelectedTab (path: string|undefined) {
+      if (path === 'password') {
+        this.selectedTab = 'userChangePassword'
+      }
+      if (path === '') {
+        this.selectedTab = 'userProfile'
       }
     }
   }

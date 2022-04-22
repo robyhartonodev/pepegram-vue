@@ -1,6 +1,6 @@
 <template>
   <div class="p-4">
-    <UserChangePasswordForm />
+    <UserChangePasswordForm :user-id="userId" />
   </div>
 </template>
 
@@ -12,7 +12,16 @@ export default Vue.extend({
   layout: 'edituser',
   middleware: ['auth'],
   data () {
-    return {}
+    return {
+      userId: ''
+    }
+  },
+  mounted () {
+    const currentUser = this.$fire.auth.currentUser
+
+    if (currentUser) {
+      this.userId = currentUser.uid
+    }
   }
 })
 </script>
