@@ -1,8 +1,20 @@
 # pepegram-vue
 
-An attempt to copy the famous social media plattform Instagram.
+An attempt to copy the famous social media plattform Instagram. The application is hosted with google firebase [here](https://pepegram-f8405.web.app/login).
 
-## Build Setup
+
+# 1. Main Stacks
+
+1. Google Firebase as backend (because free 😎)
+2. VueJS
+3. NuxtJS
+4. TailwindCSS
+
+# 2. Preview - Comparison
+
+TODO
+
+# 3. Build Setup
 
 ```bash
 # Copy .env.example as .env and adjust firebase credentials
@@ -24,4 +36,23 @@ $ npm run generate
 
 For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
 
-##
+# 4. Features
+
+## I. Authentication
+
+1. Login
+2. Register
+3. Change password
+4. Reset password
+
+## II. Base
+
+1. Flash message - show errors, successes, etc.
+
+## III. Cores - TODOs
+
+1. [x] Instagram UI Pages - Story, Settings, Home
+2. [ ] Follow functionality
+3. [ ] Post functionality
+4. [ ] Story functionality
+5. [ ] User profile CRUD functionality
