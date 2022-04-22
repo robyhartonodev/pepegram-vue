@@ -20,6 +20,11 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'IndexPage',
-  middleware: ['auth']
+  middleware: ['auth'],
+  head () {
+    return {
+      title: 'Pepegram'
+    }
+  }
 })
 </script>

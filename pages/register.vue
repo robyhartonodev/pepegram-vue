@@ -42,6 +42,7 @@
 </template>
 
 <script lang="ts">
+import { AuthError, UserCredential } from '@firebase/auth'
 import Vue from 'vue'
 
 export default Vue.extend({
@@ -56,12 +57,17 @@ export default Vue.extend({
       isBusy: false
     }
   },
+  head () {
+    return {
+      title: 'Pepegram - Register'
+    }
+  },
   methods: {
     register () {
       this.isBusy = true
 
       this.$fire.auth.createUserWithEmailAndPassword(this.email, this.password)
-        .then((response) => {
+        .then((response: UserCredential) => {
           this.$router.push('/login')
           this.$store.dispatch('flashmessage/show', { text: 'Registration successful', duration: 5000, type: 'success' })
 
@@ -75,7 +81,7 @@ export default Vue.extend({
               })
           }
         })
-        .catch((err) => {
+        .catch((err: AuthError) => {
           this.$store.dispatch('flashmessage/show', { text: 'Registration failed! Please check your data!', duration: 2000, type: 'danger' })
           return Promise.reject(err)
         })

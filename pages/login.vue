@@ -46,6 +46,7 @@
 </template>
 
 <script lang="ts">
+import { AuthError } from '@firebase/auth'
 import Vue from 'vue'
 
 export default Vue.extend({
@@ -59,6 +60,11 @@ export default Vue.extend({
       isBusy: false
     }
   },
+  head () {
+    return {
+      title: 'Pepegram - Login'
+    }
+  },
   mounted () {
   },
   methods: {
@@ -70,7 +76,7 @@ export default Vue.extend({
           this.$router.push('/')
           this.$store.dispatch('flashmessage/show', { text: 'Login Successful', duration: 5000, type: 'success' })
         })
-        .catch((err) => {
+        .catch((err: AuthError) => {
           this.$store.dispatch('flashmessage/show', { text: 'Login Failed. Please check your credentials!', duration: 2000, type: 'danger' })
           return Promise.reject(err)
         })

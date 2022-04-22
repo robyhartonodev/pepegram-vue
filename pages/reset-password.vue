@@ -30,6 +30,7 @@
 </template>
 
 <script lang="ts">
+import { AuthError } from '@firebase/auth'
 import Vue from 'vue'
 
 export default Vue.extend({
@@ -39,6 +40,11 @@ export default Vue.extend({
     return {
       email: '',
       isBusy: false
+    }
+  },
+  head () {
+    return {
+      title: 'Pepegram - Reset Password'
     }
   },
   methods: {
@@ -55,7 +61,7 @@ export default Vue.extend({
 
           this.$router.push('/login')
         })
-        .catch((error) => {
+        .catch((error: AuthError) => {
           if (error.code === 'auth/invalid-email') {
             this.$store.dispatch('flashmessage/show', {
               text: 'Wrong Email! Please provide a valid email (registered)!',

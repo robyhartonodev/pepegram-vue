@@ -1,11 +1,11 @@
 <template>
   <div class="flex justify-between px-4 lg:px-48 py-4 items-center border-b-2 mb-4">
-    <div class="instagram-font text-slate-900 text-3xl">
+    <button class="instagram-font text-slate-900 text-3xl" @click="redirectToPath('/')">
       Pepegram
-    </div>
+    </button>
     <SearchBar class="hidden md:flex" />
     <div class="flex space-x-5">
-      <button>
+      <button @click="redirectToPath('/')">
         <IconHome class="h-8 w-8 text-slate-800" />
       </button>
       <button>
@@ -32,7 +32,11 @@ export default Vue.extend({
   name: 'HeaderComponent',
   data () {
     return {
-
+    }
+  },
+  methods: {
+    redirectToPath (path: string) {
+      this.$router.push(path)
     }
   }
 })
