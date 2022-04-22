@@ -10,9 +10,18 @@ An attempt to copy the famous social media plattform Instagram. The application 
 3. NuxtJS
 4. TailwindCSS
 
-# 2. Preview - Comparison
+# 2. Preview
 
-TODO
+## I. Login page
+
+![alt text](https://raw.githubusercontent.com/robyhartonodev/pepegram-vue/master/assets/images/demos/pepegram-login.PNG)
+
+## II. Home page - Pepegram | Instagram (Web)
+
+![alt text](https://raw.githubusercontent.com/robyhartonodev/pepegram-vue/master/assets/images/demos/pepegram-home.PNG)
+
+![alt text](https://raw.githubusercontent.com/robyhartonodev/pepegram-vue/master/assets/images/demos/instagram-web-home.PNG)
+
 
 # 3. Build Setup
 
