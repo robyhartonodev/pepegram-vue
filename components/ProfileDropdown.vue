@@ -27,19 +27,39 @@
         <div class="flex flex-col p-3 space-y-2">
           <div class="flex items-center">
             <IconUserCircle />
-            <a id="menu-item-0" href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1">Profile</a>
+            <button
+              id="menu-item-0"
+              class="text-gray-700 text-left block px-4 py-2 text-sm w-full"
+              role="menuitem"
+              tabindex="-1"
+              @click="redirectToUserProfile"
+            >
+              Profile
+            </button>
           </div>
           <div class="flex items-center">
             <IconBookmark />
-            <a id="menu-item-1" href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1">Saved</a>
+            <button id="menu-item-1" class="text-gray-700 text-left block px-4 py-2 text-sm w-full" role="menuitem" tabindex="-1">
+              Saved
+            </button>
           </div>
           <div class="flex items-center">
             <IconCog />
-            <a id="menu-item-2" href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1">Settings</a>
+            <button
+              id="menu-item-2"
+              class="text-gray-700 text-left block px-4 py-2 text-sm w-full"
+              role="menuitem"
+              tabindex="-1"
+              @click="redirectToUserSettings"
+            >
+              Settings
+            </button>
           </div>
           <div class="flex items-center">
             <IconRefresh />
-            <a id="menu-item-3" href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1">Switch Accounts</a>
+            <button id="menu-item-3" class="text-gray-700 text-left block px-4 py-2 text-sm w-full" role="menuitem" tabindex="-1">
+              Switch Accounts
+            </button>
           </div>
         </div>
         <hr>
@@ -81,6 +101,20 @@ export default Vue.extend({
         })
         .catch(() => {
         })
+    },
+    redirectToUserProfile () {
+      const currentUser = this.$fire.auth.currentUser
+
+      if (currentUser) {
+        this.$router.push(`/users/${currentUser.uid}`)
+      }
+    },
+    redirectToUserSettings () {
+      const currentUser = this.$fire.auth.currentUser
+
+      if (currentUser) {
+        this.$router.push(`/users/${currentUser.uid}/edit`)
+      }
     }
   }
 })

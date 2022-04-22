@@ -60,9 +60,19 @@ export default Vue.extend({
       this.isBusy = true
 
       this.$fire.auth.createUserWithEmailAndPassword(this.email, this.password)
-        .then(() => {
+        .then((response) => {
           this.$router.push('/login')
           this.$store.dispatch('flashmessage/show', { text: 'Registration successful', duration: 5000, type: 'success' })
+
+          const registeredUser = response.user
+          if (registeredUser) {
+            this.$fire.firestore
+              .collection('users')
+              .doc(registeredUser.uid)
+              .set({
+                email: registeredUser.email
+              })
+          }
         })
         .catch((err) => {
           this.$store.dispatch('flashmessage/show', { text: 'Registration failed! Please check your data!', duration: 2000, type: 'danger' })

@@ -3,6 +3,7 @@
     <Header />
     <FlashMessage />
     <Nuxt />
+    <Footer />
   </div>
 </template>
 
