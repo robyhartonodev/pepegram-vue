@@ -62,10 +62,6 @@
     <div>
       <UserPostList />
     </div>
-
-    <div class="mt-8">
-      <Footer />
-    </div>
   </div>
 </template>
 
