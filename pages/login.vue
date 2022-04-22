@@ -27,7 +27,7 @@
       >
 
       <div class="text-gray-400">
-        Forgot your password? Click <a href="#" class="text-teal-500">here</a>
+        Forgot your password? Click <a href="/reset-password" class="text-teal-500">here</a>
       </div>
 
       <button
