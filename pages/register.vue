@@ -47,6 +47,7 @@ import Vue from 'vue'
 export default Vue.extend({
   name: 'RegisterPage',
   layout: 'guest',
+  middleware: ['guest'],
   data () {
     return {
       email: '',
