@@ -11,7 +11,7 @@
           name="edit-user-password-old-password"
           type="password"
           placeholder="Old Password"
-          class="rounded-md border-gray-300 placeholder:text-gray-500 min-w-[24rem]"
+          class="rounded-md border-gray-300 placeholder:text-gray-500 w-full"
         >
       </div>
       <div class="justify-self-end col-span-1 font-bold">
@@ -24,7 +24,7 @@
           name="edit-user-password-new-password"
           type="password"
           placeholder="New Password"
-          class="rounded-md border-gray-300 placeholder:text-gray-500 min-w-[24rem]"
+          class="rounded-md border-gray-300 placeholder:text-gray-500 w-full"
         >
       </div>
       <div class="justify-self-end col-span-1 font-bold">
@@ -37,7 +37,7 @@
           name="edit-user-password-new-password-confirmation"
           type="password"
           placeholder="Confirm New Password"
-          class="rounded-md border-gray-300 placeholder:text-gray-500 min-w-[24rem]"
+          class="rounded-md border-gray-300 placeholder:text-gray-500 w-full"
         >
       </div>
 

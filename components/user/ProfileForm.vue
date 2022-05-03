@@ -5,7 +5,7 @@
         TT
       </div>
       <div class="col-span-2">
-        <div>Username322</div>
+        <div>{{ username }}</div>
         <div>
           <button class="text-blue-500">
             Change Profile Photo
@@ -19,13 +19,13 @@
       <div class="col-span-2">
         <input
           id="edit-user-name"
+          v-model="name"
           name="edit-user-name"
           type="text"
           placeholder="Name"
-          value="test name"
-          class="rounded-md border-gray-300 placeholder:text-gray-500 min-w-[24rem]"
+          class="rounded-md border-gray-300 placeholder:text-gray-500 w-full"
         >
-        <div class="text-xs text-gray-500 w-[24rem] mt-4">
+        <div class="text-xs text-gray-500 w-full mt-4 text-justify">
           Help people discover your account by using the name you're known by:
           either your full name, nickname, or business name.
         </div>
@@ -37,13 +37,13 @@
       <div class="col-span-2">
         <input
           id="edit-user-username"
+          v-model="username"
           name="edit-user-username"
           type="text"
           placeholder="Username"
-          value="test username"
-          class="rounded-md border-gray-300 placeholder:text-gray-500 min-w-[24rem]"
+          class="rounded-md border-gray-300 placeholder:text-gray-500 w-full"
         >
-        <div class="text-xs text-gray-500 w-[24rem] mt-4">
+        <div class="text-xs text-gray-500 w-full mt-4 text-justify">
           Help people discover your account by using the name you're known by:
           either your full name, nickname, or business name.
         </div>
@@ -55,11 +55,11 @@
       <div class="col-span-2">
         <input
           id="edit-user-website"
+          v-model="website"
           name="edit-user-website"
-          type="text"
+          type="url"
           placeholder="Website"
-          value="test website"
-          class="rounded-md border-gray-300 placeholder:text-gray-500 min-w-[24rem]"
+          class="rounded-md border-gray-300 placeholder:text-gray-500 w-full"
         >
       </div>
 
@@ -69,33 +69,35 @@
       <div class="col-span-2">
         <textarea
           id="edit-user-biography"
+          v-model="biography"
           name="edit-user-biography"
           placeholder="Biography"
           value="test biography"
-          class="rounded-md border-gray-300 placeholder:text-gray-500 min-w-[24rem]"
+          class="rounded-md border-gray-300 placeholder:text-gray-500 w-full"
         />
-        <div class="text-sm text-gray-500 w-[24rem] mt-4 font-bold">
+        <div class="text-sm text-gray-500 w-full mt-4 text-justify font-bold">
           Personal Information
         </div>
-        <div class="text-xs text-gray-500 w-[24rem] mt-4">
+        <div class="text-xs text-gray-500 w-full mt-4 text-justify">
           Provide your personal information, even if the account is used for a business, a pet or something else.
           This won't be a part of your public profile.
         </div>
       </div>
 
-      <div class="justify-self-end col-span-1 font-bold">
+      <!-- <div class="justify-self-end col-span-1 font-bold">
         Email
       </div>
       <div class="col-span-2">
         <input
           id="edit-user-email"
+          v-model="email"
           name="edit-user-email"
           type="email"
           placeholder="Email"
           value="test email"
-          class="rounded-md border-gray-300 placeholder:text-gray-500 min-w-[24rem]"
+          class="rounded-md border-gray-300 placeholder:text-gray-500 w-full"
         >
-      </div>
+      </div> -->
 
       <div class="justify-self-end col-span-1 font-bold">
         Phone Number
@@ -103,11 +105,13 @@
       <div class="col-span-2">
         <input
           id="edit-user-phone-number"
+          v-model="phoneNumber"
           name="edit-user-phone-number"
-          type="text"
+          type="tel"
           placeholder="Phone Number"
-          value="test phone number"
-          class="rounded-md border-gray-300 placeholder:text-gray-500 min-w-[24rem]"
+          class="rounded-md border-gray-300 placeholder:text-gray-500 w-full"
+          pattern="[+]{1}[0-9]{11,14}"
+          required
         >
       </div>
 
@@ -117,10 +121,10 @@
       <div class="col-span-2">
         <select
           id="edit-user-gender"
+          v-model="gender"
           name="edit-user-gender"
           placeholder="Email"
-          value="male"
-          class="rounded-md border-gray-300 placeholder:text-gray-500 min-w-[24rem]"
+          class="rounded-md border-gray-300 placeholder:text-gray-500 w-full"
         >
           <option value="male">
             Male
@@ -132,7 +136,7 @@
       </div>
 
       <div class="justify-self-end col-span-1">
-        <button class="bg-blue-500 text-white p-2 rounded-md">
+        <button class="bg-blue-500 text-white p-2 rounded-md" @click="onSubmit">
           Submit
         </button>
       </div>
@@ -153,7 +157,77 @@ export default Vue.extend({
   },
   data () {
     return {
+      isBusy: false,
+      name: '',
+      username: '',
+      website: '',
+      biography: '',
+      email: '',
+      phoneNumber: '',
+      gender: ''
+    }
+  },
+  mounted () {
+    const currentUser = this.$fire.auth.currentUser
 
+    if (currentUser) {
+      this.$fire.firestore.collection('users').doc(currentUser.uid).get()
+        .then((response) => {
+          const responseUser = response.data()
+
+          console.log(responseUser)
+
+          if (responseUser) {
+            this.name = responseUser.name
+            this.username = responseUser.username
+            this.website = responseUser.website
+            this.biography = responseUser.biography
+            this.email = responseUser.email
+            this.phoneNumber = responseUser.phoneNumber
+            this.gender = responseUser.gender
+          }
+        })
+        .catch(() => {
+          this.$store.dispatch('flashmessage/show', {
+            text: 'Something went wrong!',
+            duration: 5000,
+            type: 'danger'
+          })
+        })
+    }
+  },
+  methods: {
+    onSubmit () {
+      const currentUser = this.$fire.auth.currentUser
+
+      if (currentUser) {
+        this.$fire.firestore.collection('users')
+          .doc(currentUser.uid)
+          .update({
+            name: this.name,
+            username: this.username,
+            website: this.website,
+            biography: this.biography,
+            phoneNumber: this.phoneNumber,
+            gender: this.gender
+          })
+          .then(() => {
+            this.$store.dispatch('flashmessage/show', {
+              text: 'User updated successfuly',
+              duration: 5000,
+              type: 'success'
+            })
+
+            this.$router.go(0)
+          })
+          .catch(() => {
+            this.$store.dispatch('flashmessage/show', {
+              text: 'Something went wrong!',
+              duration: 5000,
+              type: 'danger'
+            })
+          })
+      }
     }
   }
 })
@@ -164,4 +238,3 @@ export default Vue.extend({
   place-items: baseline normal;
 }
 </style>
-</template></template></template></template></template></template></template></template></template></template></template>

@@ -37,12 +37,12 @@
               Profile
             </button>
           </div>
-          <div class="flex items-center">
+          <!-- <div class="flex items-center">
             <IconBookmark />
             <button id="menu-item-1" class="text-gray-700 text-left block px-4 py-2 text-sm w-full" role="menuitem" tabindex="-1">
               Saved
             </button>
-          </div>
+          </div> -->
           <div class="flex items-center">
             <IconCog />
             <button
@@ -55,12 +55,12 @@
               Settings
             </button>
           </div>
-          <div class="flex items-center">
+          <!-- <div class="flex items-center">
             <IconRefresh />
             <button id="menu-item-3" class="text-gray-700 text-left block px-4 py-2 text-sm w-full" role="menuitem" tabindex="-1">
               Switch Accounts
             </button>
-          </div>
+          </div> -->
         </div>
         <hr>
         <div>

@@ -3,6 +3,7 @@
     <StoryFullItem
       v-for="index in 20"
       :key="'story-full-' + index"
+      @click="setSelectedStoryIndex(index)"
     />
   </div>
 </template>
@@ -14,7 +15,12 @@ export default Vue.extend({
   name: 'StoryFullSlider',
   data () {
     return {
-
+      selectedStoryIndex: null as null|number
+    }
+  },
+  methods: {
+    setSelectedStoryIndex (index: number) {
+      this.selectedStoryIndex = index
     }
   }
 })

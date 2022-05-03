@@ -8,20 +8,25 @@
       <button @click="redirectToPath('/')">
         <IconHome class="h-8 w-8 text-slate-800" />
       </button>
-      <button>
+      <!-- <button>
         <IconPaperPlane class="h-8 w-8 text-slate-800" />
-      </button>
-      <button>
+      </button> -->
+      <button @click="showNewPostModal">
         <IconPlusCircle class="h-8 w-8 text-slate-800" />
       </button>
-      <button>
+      <!-- <button>
         <IconGlobe class="h-8 w-8 text-slate-800" />
       </button>
       <button>
         <IconHeart class="h-8 w-8 text-slate-800" />
-      </button>
+      </button> -->
       <ProfileDropdown />
     </div>
+
+    <ModalNewPost
+      v-show="showModal"
+      @close="showModal = false"
+    />
   </div>
 </template>
 
@@ -32,11 +37,15 @@ export default Vue.extend({
   name: 'HeaderComponent',
   data () {
     return {
+      showModal: false
     }
   },
   methods: {
     redirectToPath (path: string) {
       this.$router.push(path)
+    },
+    showNewPostModal () {
+      this.showModal = true
     }
   }
 })

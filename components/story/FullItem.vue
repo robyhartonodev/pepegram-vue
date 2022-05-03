@@ -1,6 +1,6 @@
 <template>
   <div
-    class="story-card flex flex-col min-w-[100%] md:min-w-[30%] rounded-lg shadow-md p-2"
+    class="flex flex-col min-w-[100%] md:min-w-[30%] rounded-lg shadow-md p-2"
     :style="{
       'background': `url(${require('~/assets/images/stories/story-4.jpg')})`,
       'background-size': 'cover',

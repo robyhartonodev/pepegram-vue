@@ -25,6 +25,22 @@ export default Vue.extend({
     return {
       title: 'Pepegram'
     }
+  },
+  mounted () {
+    const currentUser = this.$fire.auth.currentUser
+
+    if (currentUser) {
+      // this.$fireModule.database()
+      //   .ref('users/' + currentUser.uid)
+      //   .set({
+      //     followersCount: 0,
+      //     followingCount: 0,
+      //     followingIds: ['id1', 'id2', 'id3'],
+      //     followerIds: ['id1', 'id2', 'id3']
+      //   })
+
+      // this.$fire.database.ref('users')
+    }
   }
 })
 </script>
