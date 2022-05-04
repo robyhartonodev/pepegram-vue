@@ -20,7 +20,10 @@
         </button>
       </div>
     </div>
-    <div class="flex justify-between items-center mt-8">
+    <div
+      v-if="suggestionList.length > 0"
+      class="flex justify-between items-center mt-8"
+    >
       <div class="text-gray-400 text-lg font-bold">
         Suggestions For You
       </div>
@@ -30,8 +33,11 @@
     </div>
     <div class="flex flex-col space-y-2 mt-4">
       <SuggestionItem
-        v-for="index in 5"
+        v-for="item,index in suggestionList"
         :key="'suggest-' + index"
+        :username="item.username"
+        :user-id="item.id"
+        @follow="getFriendSuggestionList"
       />
     </div>
     <div class="mt-8 text-gray-400 text-sm">
@@ -69,11 +75,33 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { documentId } from 'firebase/firestore'
 
 export default Vue.extend({
   name: 'SideMenu',
   data () {
-    return {}
+    return {
+      suggestionList: [] as any[]
+    }
+  },
+  mounted () {
+    this.getFriendSuggestionList()
+  },
+  methods: {
+    getFriendSuggestionList () {
+      const currentUser = this.$fire.auth.currentUser
+
+      if (currentUser) {
+        this.$fire.firestore
+          .collection('users')
+          .where(documentId(), '!=', currentUser.uid)
+          // .where('followingArray', 'not-in', storedUser)
+          .get()
+          .then((response) => {
+            this.suggestionList = response.docs.map((doc) => { return { id: doc.id, ...doc.data() } })
+          })
+      }
+    }
   }
 })
 </script>

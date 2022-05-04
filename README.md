@@ -65,3 +65,7 @@ For detailed explanation on how things work, check out the [documentation](https
 3. [ ] Post functionality
 4. [ ] Story functionality
 5. [ ] User profile CRUD functionality
+6. [ ] Unit Test
+7. [ ] E2E Test
+8. [ ] Test coverage
+9. [ ] CI/CD with e.g. Github Action, Travis, etc.

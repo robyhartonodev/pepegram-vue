@@ -178,13 +178,13 @@ export default Vue.extend({
           console.log(responseUser)
 
           if (responseUser) {
-            this.name = responseUser.name
-            this.username = responseUser.username
-            this.website = responseUser.website
-            this.biography = responseUser.biography
-            this.email = responseUser.email
-            this.phoneNumber = responseUser.phoneNumber
-            this.gender = responseUser.gender
+            this.name = (responseUser.name) ? responseUser.name : ''
+            this.username = (responseUser.username) ? responseUser.username : ''
+            this.website = (responseUser.website) ? responseUser.website : ''
+            this.biography = (responseUser.biography) ? responseUser.biography : ''
+            this.email = (responseUser.email) ? responseUser.email : ''
+            this.phoneNumber = (responseUser.phoneNumber) ? responseUser.phoneNumber : ''
+            this.gender = (responseUser.gender) ? responseUser.gender : ''
           }
         })
         .catch(() => {
@@ -212,13 +212,13 @@ export default Vue.extend({
             gender: this.gender
           })
           .then(() => {
+            this.$router.go(0)
+
             this.$store.dispatch('flashmessage/show', {
               text: 'User updated successfuly',
               duration: 5000,
               type: 'success'
             })
-
-            this.$router.go(0)
           })
           .catch(() => {
             this.$store.dispatch('flashmessage/show', {

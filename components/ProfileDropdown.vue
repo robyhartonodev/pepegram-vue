@@ -98,6 +98,7 @@ export default Vue.extend({
         .then(() => {
           this.$router.push('/login')
           this.$store.dispatch('flashmessage/show', { text: 'Logout successful', duration: 5000, type: 'success' })
+          localStorage.clear()
         })
         .catch(() => {
         })

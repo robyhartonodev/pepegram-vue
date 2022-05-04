@@ -72,12 +72,21 @@ export default Vue.extend({
           this.$store.dispatch('flashmessage/show', { text: 'Registration successful', duration: 5000, type: 'success' })
 
           const registeredUser = response.user
+
           if (registeredUser) {
             this.$fire.firestore
               .collection('users')
               .doc(registeredUser.uid)
               .set({
-                email: registeredUser.email
+                email: registeredUser.email,
+                followerCount: 0,
+                followingCount: 0,
+                postCount: 0,
+                storyCount: 0,
+                followerArray: [],
+                followingArray: [],
+                postArray: [],
+                storyArray: []
               })
           }
         })

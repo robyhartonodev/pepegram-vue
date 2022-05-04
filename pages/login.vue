@@ -46,7 +46,8 @@
 </template>
 
 <script lang="ts">
-import { AuthError } from '@firebase/auth'
+import { AuthError, UserCredential } from '@firebase/auth'
+import { DocumentData } from '@firebase/firestore'
 import Vue from 'vue'
 
 export default Vue.extend({
@@ -75,6 +76,20 @@ export default Vue.extend({
         .then(() => {
           this.$router.push('/')
           this.$store.dispatch('flashmessage/show', { text: 'Login Successful', duration: 5000, type: 'success' })
+
+          const currentUser = this.$fire.auth.currentUser
+
+          // Set current user object into the store using action
+          if (currentUser) {
+            this.$fire.firestore.collection('users')
+              .doc(currentUser.uid)
+              .get()
+              .then((doc: DocumentData) => {
+                this.$store.dispatch('currentUser/setCurrentUser', {currentUser: doc.data()})
+                console.log('currentUser set successfully!')
+              })
+          }
+
         })
         .catch((err: AuthError) => {
           this.$store.dispatch('flashmessage/show', { text: 'Login Failed. Please check your credentials!', duration: 2000, type: 'danger' })
