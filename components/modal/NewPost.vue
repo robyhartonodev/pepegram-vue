@@ -97,6 +97,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { increment, arrayUnion } from '@firebase/firestore'
 
 export default Vue.extend({
   name: 'ModalComponent',
@@ -131,25 +132,49 @@ export default Vue.extend({
       const currentUser = this.$fire.auth.currentUser
 
       if (currentUser && this.selectedFiles) {
+        // Create a post document in the firestore posts collection
         this.$fire.firestore.collection('posts')
           .add({
             caption: this.postCaption,
             posterId: currentUser.uid
           })
           .then((response) => {
-            this.$fire.storage.ref(`posts/${currentUser.uid}/${response.id}/1.jpg`)
+            const postId = response.id
+            // Store the media object in the firebase storage
+            this.$fire.storage.ref(`posts/${currentUser.uid}/${postId}/1.jpg`)
               .put((this.selectedFiles as Blob))
               .then((response) => {
-                this.$store.dispatch('flashmessage/show', {
-                  text: 'Post created!',
-                  duration: 5000,
-                  type: 'success'
-                })
-
-                console.log(response.metadata.fullPath)
-
-                this.closeModal()
-                this.$router.push('/')
+                response.ref
+                  .getDownloadURL()
+                  .then((downloadUrlString) => {
+                    // Set media path url string attribute to the document
+                    this.$fire.firestore
+                      .collection('posts')
+                      .doc(postId)
+                      .update({
+                        mediaPathUrl: downloadUrlString
+                      })
+                      .then(() => {
+                        // Update corresponding user post attribute
+                        this.$fire.firestore
+                          .collection('users')
+                          .doc(currentUser.uid)
+                          .update({
+                            postCount: increment(1),
+                            postArray: arrayUnion(postId)
+                          })
+                          .then(() => {
+                            this.$store.dispatch('flashmessage/show', {
+                              text: 'Post created!',
+                              duration: 5000,
+                              type: 'success'
+                            })
+                            this.closeModal()
+                            this.$router.push('/')
+                          })
+                      })
+                      .catch(err => Promise.reject(err))
+                  })
               })
               .catch(() => {
                 this.$store.dispatch('flashmessage/show', {
@@ -178,8 +203,6 @@ export default Vue.extend({
           this.selectedFiles = files[0]
           this.previewImageUrl = URL.createObjectURL(this.selectedFiles)
           this.setStep('postInformation')
-
-          console.log(this.selectedFiles)
         }
       }
     }

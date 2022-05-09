@@ -26,13 +26,13 @@
 
         <div class="flex space-x-12">
           <div>
-            <span class="font-bold">10</span> posts
+            <span class="font-bold">{{ postCount }}</span> posts
           </div>
           <div>
-            <span class="font-bold">322</span> followers
+            <span class="font-bold">{{ followerCount }}</span> followers
           </div>
           <div>
-            <span class="font-bold">644</span> following
+            <span class="font-bold">{{ followingCount }}</span> following
           </div>
         </div>
 
@@ -80,54 +80,14 @@ export default Vue.extend({
       name: '',
       username: '',
       biography: '',
-      website: ''
+      website: '',
+      followerCount: 0,
+      followingCount: 0,
+      postCount: 0
     }
   },
   mounted () {
-    const currentUser = this.$fire.auth.currentUser
-
-    if (currentUser) {
-      this.$fire.firestore
-        .collection('users')
-        .doc(currentUser.uid)
-        .get()
-        .then((response) => {
-          const responseUser = response.data()
-
-          console.log(responseUser)
-
-          if (responseUser) {
-            this.name = responseUser.name
-            this.username = responseUser.username
-            this.website = responseUser.website
-            this.biography = responseUser.biography
-          }
-        })
-        .catch(() => {
-          this.$store.dispatch('flashmessage/show', {
-            text: 'Something went wrong!',
-            duration: 5000,
-            type: 'danger'
-          })
-        })
-
-      // this.$fire.storage.ref('posts/M2sxPszYcsRGHzSUlNK02NBfNwG3')
-      //   .listAll()
-      //   .then((response) => {
-      //     response.prefixes.forEach((folderRef) => {
-      //       folderRef.listAll().then((response) => {
-      //         response.items.forEach((itemRef) => {
-      //           this.$fire.storage.ref(itemRef.fullPath)
-      //             .getDownloadURL()
-      //             .then((url) => {
-      //               this.urlList.push(url)
-      //               console.log(this.urlList)
-      //             })
-      //         })
-      //       })
-      //     })
-      //   })
-    }
+    this.getUser()
   },
   methods: {
     redirectToUserSettings () {
@@ -136,6 +96,27 @@ export default Vue.extend({
       if (currentUser) {
         this.$router.push(`/users/${currentUser.uid}/edit`)
       }
+    },
+    getUser () {
+      const userParamId = this.$route.params.id
+
+      this.$fire.firestore
+        .collection('users')
+        .doc(userParamId)
+        .get()
+        .then((doc) => {
+          const data = doc.data()
+
+          if (data) {
+            this.name = data.name
+            this.username = data.username
+            this.biography = data.biography
+            this.website = data.website
+            this.followerCount = data.followerCount
+            this.followingCount = data.followingCount
+            this.postCount = data.postCount
+          }
+        })
     }
   }
 })

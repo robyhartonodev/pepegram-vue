@@ -7,10 +7,10 @@
         </div>
         <div class="flex flex-col">
           <div class="font-bold">
-            username123
+            {{ currentUser.username }}
           </div>
           <div class="text-gray-400">
-            Max Mustermann
+            {{ currentUser.name }}
           </div>
         </div>
       </div>
@@ -75,13 +75,14 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { documentId } from 'firebase/firestore'
+import { DocumentData, documentId } from 'firebase/firestore'
 
 export default Vue.extend({
   name: 'SideMenu',
   data () {
     return {
-      suggestionList: [] as any[]
+      suggestionList: [] as any[],
+      currentUser: this.$store.state.currentUser.currentUser
     }
   },
   mounted () {
@@ -95,12 +96,25 @@ export default Vue.extend({
         this.$fire.firestore
           .collection('users')
           .where(documentId(), '!=', currentUser.uid)
-          // .where('followingArray', 'not-in', storedUser)
           .get()
           .then((response) => {
             this.suggestionList = response.docs.map((doc) => { return { id: doc.id, ...doc.data() } })
+
+            // Update current user store object
+            this.$fire.firestore.collection('users')
+              .doc(currentUser.uid)
+              .get()
+              .then((doc: DocumentData) => {
+                this.$store.dispatch('currentUser/setCurrentUser', { currentUser: doc.data() })
+                  .then(() => {
+                    const followingArray = this.$store.state.currentUser.currentUser.followingArray as string[]
+                    this.suggestionList = this.suggestionList.filter((suggestion: any) => !followingArray.includes(suggestion.id))
+                  })
+              })
           })
       }
+
+      console.log('called friend suggestion list')
     }
   }
 })

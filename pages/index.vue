@@ -3,10 +3,7 @@
     <div class="col-span-3 lg:col-span-2">
       <StorySlider class="mb-4" />
       <div class="flex flex-col space-y-6">
-        <div v-for="index in 10" :key="'post-item-'+index">
-          <PostItem />
-          <SuggestionFriendSlider v-if="index === 2" class="mt-4" />
-        </div>
+        <PostList />
       </div>
     </div>
     <div class="col-span-0 lg:col-span-1">

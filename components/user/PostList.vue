@@ -2,10 +2,10 @@
   <div class="grid grid-cols-3 gap-1 md:gap-5">
     <div
       v-for="item in postList"
-      :key="item.imageUrl"
+      :key="item.mediaPathUrl"
       class="h-36 md:h-72 text-white"
     >
-      <img :src="item.imageUrl" :alt="item.imageUrl" class="w-full h-full object-cover">
+      <img :src="item.mediaPathUrl" :alt="item.mediaPathUrl" class="w-full h-full object-cover">
     </div>
   </div>
 </template>
@@ -13,10 +13,11 @@
 <script lang="ts">
 import Vue from 'vue'
 
-interface postItem {
-  id?: string;
-  caption?: string;
-  imageUrl?: string;
+interface PostItem {
+  id: string;
+  caption: string;
+  posterId: string;
+  mediaPathUrl: string;
 }
 
 export default Vue.extend({
@@ -28,28 +29,36 @@ export default Vue.extend({
     }
   },
   data () {
-    // TODO call all posts collection of the current user
-    // TODO call storage service, based on posterId key
-    // TODO map postList and append imageUrl based on post ID
-
     return {
-      postList: [] as postItem[]
+      postList: [] as PostItem[]
     }
   },
   mounted () {
-    // const currentUser = this.$fire.auth.currentUser
+    this.getUserPosts()
+  },
+  methods: {
+    getUserPosts () {
+      const userParamId = this.$route.params.id
 
-    // if (currentUser) {
-    //   this.$fire.firestore
-    //     .collection('posts')
-    //     .where('posterId', '==', currentUser.uid)
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       querySnapshot.forEach((doc) => {
-    //         console.log(doc.data())
-    //       })
-    //     })
-    // }
+      if (userParamId) {
+        this.$fire.firestore
+          .collection('posts')
+          .where('posterId', '==', userParamId)
+          .get()
+          .then((querySnapshot) => {
+            this.postList = querySnapshot.docs.map((doc) => {
+              const data = doc.data()
+
+              return {
+                id: doc.id,
+                caption: data.caption,
+                posterId: data.posterId,
+                mediaPathUrl: data.mediaPathUrl
+              }
+            })
+          })
+      }
+    }
   }
 })
 </script>

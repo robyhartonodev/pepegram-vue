@@ -68,9 +68,6 @@ export default Vue.extend({
 
       this.$fire.auth.createUserWithEmailAndPassword(this.email, this.password)
         .then((response: UserCredential) => {
-          this.$router.push('/login')
-          this.$store.dispatch('flashmessage/show', { text: 'Registration successful', duration: 5000, type: 'success' })
-
           const registeredUser = response.user
 
           if (registeredUser) {
@@ -88,6 +85,25 @@ export default Vue.extend({
                 postArray: [],
                 storyArray: []
               })
+
+            this.$store.dispatch('currentUser/setCurrentUser', {
+              currentUser: {
+                email: registeredUser.email,
+                followerCount: 0,
+                followingCount: 0,
+                postCount: 0,
+                storyCount: 0,
+                followerArray: [],
+                followingArray: [],
+                postArray: [],
+                storyArray: []
+              }
+            })
+
+            this.$router.push('/login')
+            this.$store.dispatch('flashmessage/show', { text: 'Registration successful', duration: 5000, type: 'success' })
+
+            console.log('currentUser set successfully!')
           }
         })
         .catch((err: AuthError) => {
