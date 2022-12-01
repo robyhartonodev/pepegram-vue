@@ -56,16 +56,4 @@ For detailed explanation on how things work, check out the [documentation](https
 
 ## II. Base
 
-1. Flash message - show errors, successes, etc.
-
-## III. Cores - TODOs
-
-1. [x] Instagram UI Pages - Story, Settings, Home
-2. [ ] Follow functionality
-3. [ ] Post functionality
-4. [ ] Story functionality
-5. [ ] User profile CRUD functionality
-6. [ ] Unit Test
-7. [ ] E2E Test
-8. [ ] Test coverage
-9. [ ] CI/CD with e.g. Github Action, Travis, etc.
+1. Flash message - show errors, successes, etc
