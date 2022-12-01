@@ -6,7 +6,7 @@
         <PostList />
       </div>
     </div>
-    <div class="col-span-0 lg:col-span-1">
+    <div class="hidden lg:flex lg:col-span-1">
       <SideMenu />
     </div>
   </div>

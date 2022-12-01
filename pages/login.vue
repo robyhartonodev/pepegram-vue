@@ -82,10 +82,29 @@ export default Vue.extend({
               .doc(currentUser.uid)
               .get()
               .then((doc: DocumentData) => {
-                this.$store.dispatch('currentUser/setCurrentUser', { currentUser: doc.data() })
+                const loggedInUserData = doc.data()
+
+                this.$store.dispatch('currentUser/setCurrentUser', {
+                  currentUser: {
+                    id: doc.id,
+                    biography: loggedInUserData.biography,
+                    email: loggedInUserData.email,
+                    followerArray: loggedInUserData.followerArray,
+                    followerCount: loggedInUserData.followerCount,
+                    followingArray: loggedInUserData.followingArray,
+                    followingCount: loggedInUserData.followingCount,
+                    gender: loggedInUserData.gender,
+                    name: loggedInUserData.name,
+                    phoneNumber: loggedInUserData.phoneNumber,
+                    postArray: loggedInUserData.postArray,
+                    postCount: loggedInUserData.postCount,
+                    username: loggedInUserData.username,
+                    website: loggedInUserData.website
+                  }
+                })
+
                 this.$router.push('/')
                 this.$store.dispatch('flashmessage/show', { text: 'Login Successful', duration: 5000, type: 'success' })
-                console.log('currentUser set successfully!')
               })
           }
         })

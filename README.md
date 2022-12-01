@@ -57,3 +57,10 @@ For detailed explanation on how things work, check out the [documentation](https
 ## II. Base
 
 1. Flash message - show errors, successes, etc
+
+# 5 Update 
+
+Run the following commands to update the application with the firebase hosting 
+
+npx firebase auth --reauth
+npx firebase deploy

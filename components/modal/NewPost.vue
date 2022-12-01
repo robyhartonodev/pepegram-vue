@@ -69,7 +69,7 @@
 
         <div class="grid grid-cols-4 h-full w-full">
           <div class="col-span-4 md:col-span-1">
-            <img :src="previewImageUrl" class="object-cover w-full h-full">
+            <img :src="previewImageUrl" class="object-fill w-full h-full">
           </div>
           <div class="col-span-4 md:col-span-3 flex flex-col">
             <textarea
@@ -97,7 +97,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { increment, arrayUnion } from '@firebase/firestore'
+import { increment, arrayUnion, serverTimestamp } from '@firebase/firestore'
 
 export default Vue.extend({
   name: 'ModalComponent',
@@ -136,7 +136,9 @@ export default Vue.extend({
         this.$fire.firestore.collection('posts')
           .add({
             caption: this.postCaption,
-            posterId: currentUser.uid
+            posterId: currentUser.uid,
+            postCreateDateTime: serverTimestamp(),
+            comments: []
           })
           .then((response) => {
             const postId = response.id

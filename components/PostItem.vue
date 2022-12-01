@@ -5,7 +5,7 @@
         <div class="h-8 w-8 rounded-full flex justify-center p-1 bg-indigo-700 text-white">
           PP
         </div>
-        <div>username123</div>
+        <div>{{ userName }}</div>
       </div>
       <button>
         <IconDotHorizontal />
@@ -14,9 +14,9 @@
 
     <div class="h-full w-full flex flex-col items-center">
       <img src="~/assets/images/people/pp-1.jpg" class="object-contain h-[48rem] w-full">
-      <div>
+      <!-- <div>
         <IconDotHorizontal />
-      </div>
+      </div> -->
     </div>
 
     <div class="flex justify-between p-4">
@@ -75,7 +75,7 @@
         class="h-8 w-8 text-gray-400 cursor-pointer"
       />
       <input
-        v-model="comment"
+        v-model="myComment"
         type="text"
         placeholder="Add a comment..."
         class=" w-full border-transparent focus:border-transparent focus:ring-0"
@@ -94,9 +94,19 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'PostItem',
+  props: {
+    post: {
+      type: Object,
+      default: () => {}
+    },
+    userName: {
+      type: String,
+      default: 'username123'
+    }
+  },
   data () {
     return {
-      comment: ''
+      myComment: ''
     }
   }
 })

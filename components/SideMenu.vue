@@ -89,6 +89,30 @@ export default Vue.extend({
     this.getFriendSuggestionList()
   },
   methods: {
+    onEmitFollow () {
+      const currentUser = this.$fire.auth.currentUser
+
+      if (currentUser) {
+        this.$fire.firestore
+          .collection('users')
+          .where(documentId(), '!=', currentUser.uid)
+          .get()
+          .then((response) => {
+            this.suggestionList = response.docs.map((doc) => { return { id: doc.id, ...doc.data() } })
+            // Update current user store object
+            this.$fire.firestore.collection('users')
+              .doc(currentUser.uid)
+              .get()
+              .then((doc: DocumentData) => {
+                this.$store.dispatch('currentUser/setCurrentUser', { currentUser: { id: doc.id, ...doc.data() } })
+                  .then(() => {
+                    const followingArray = this.$store.state.currentUser.currentUser.followingArray as string[]
+                    this.suggestionList = this.suggestionList.filter((suggestion: any) => !followingArray.includes(suggestion.id))
+                  })
+              })
+          })
+      }
+    },
     getFriendSuggestionList () {
       const currentUser = this.$fire.auth.currentUser
 
@@ -99,22 +123,8 @@ export default Vue.extend({
           .get()
           .then((response) => {
             this.suggestionList = response.docs.map((doc) => { return { id: doc.id, ...doc.data() } })
-
-            // Update current user store object
-            this.$fire.firestore.collection('users')
-              .doc(currentUser.uid)
-              .get()
-              .then((doc: DocumentData) => {
-                this.$store.dispatch('currentUser/setCurrentUser', { currentUser: doc.data() })
-                  .then(() => {
-                    const followingArray = this.$store.state.currentUser.currentUser.followingArray as string[]
-                    this.suggestionList = this.suggestionList.filter((suggestion: any) => !followingArray.includes(suggestion.id))
-                  })
-              })
           })
       }
-
-      console.log('called friend suggestion list')
     }
   }
 })

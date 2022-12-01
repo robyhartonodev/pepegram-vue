@@ -75,6 +75,10 @@ export default Vue.extend({
               .collection('users')
               .doc(registeredUser.uid)
               .set({
+                username: '',
+                website: '',
+                biography: '',
+                gender: '',
                 email: registeredUser.email,
                 followerCount: 0,
                 followingCount: 0,
@@ -88,15 +92,22 @@ export default Vue.extend({
 
             this.$store.dispatch('currentUser/setCurrentUser', {
               currentUser: {
+                id: registeredUser.uid,
+                biography: '',
                 email: registeredUser.email,
-                followerCount: 0,
-                followingCount: 0,
-                postCount: 0,
-                storyCount: 0,
                 followerArray: [],
+                followerCount: 0,
                 followingArray: [],
+                followingCount: 0,
                 postArray: [],
-                storyArray: []
+                postCount: 0,
+                storyArray: [],
+                storyCount: 0,
+                gender: '',
+                name: '',
+                phoneNumber: '',
+                username: '',
+                website: ''
               }
             })
 
