@@ -60,7 +60,7 @@ For detailed explanation on how things work, check out the [documentation](https
 
 # 5 Update 
 
-Run the following commands to update the application with the firebase hosting 
+After the build copy the files from the directory `dist` into `public` directory. Then run the following commands to update the application with the firebase hosting
 
 npx firebase auth --reauth
 npx firebase deploy
